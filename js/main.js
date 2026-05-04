@@ -108,3 +108,38 @@ let homeSectionHeight = $('#home').height() - 70;
 console.log(homeSectionHeight)
 $('#project-scope').css('margin-top', homeSectionHeight + 'px')
 // $('#project-scope').css('height', homeSectionHeight + 'px')
+
+// Contact Form Submission
+$(function() {
+    // Handle the contact form
+    $('#contact-form').submit(function(e) {
+        e.preventDefault();
+        
+        var name = $('#name').val();
+        var email = $('#email').val();
+        var message = $('#message').val();
+        
+        var to = "kavindakgd@gmail.com";
+        var subject = "Inquiry from " + name;
+        var body = "Name: " + name + "\nEmail: " + email + "\n\nMessage:\n" + message;
+        
+        openInOutlook(to, subject, body);
+    });
+
+    // Handle all team/footer email links
+    $('.outlook-link').click(function(e) {
+        e.preventDefault();
+        var href = $(this).attr('href');
+        var to = href.replace('mailto:', '');
+        openInOutlook(to, "Inquiry via Website", "");
+    });
+
+    function openInOutlook(to, subject, body) {
+        var outlookUrl = "https://outlook.office.com/mail/deeplink/compose?" + 
+            "to=" + encodeURIComponent(to) + 
+            "&subject=" + encodeURIComponent(subject) + 
+            "&body=" + encodeURIComponent(body);
+        
+        window.open(outlookUrl, '_blank');
+    }
+});
